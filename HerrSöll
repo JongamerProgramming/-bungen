@@ -1,0 +1,80 @@
+import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import javax.swing.JFrame;
+import javax.swing.JButton;
+import javax.swing.JTextArea;
+
+public class ZeitAusgabe extends TimerTask{
+
+	private JFrame frame;
+	public int countMilli=0;
+	Timer t2;
+
+	public JTextArea textArea = new JTextArea();
+	
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					ZeitAusgabe window = new ZeitAusgabe();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public ZeitAusgabe() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 450, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		
+		JButton btnStart = new JButton("Start");
+		btnStart.setBounds(27, 72, 108, 36);
+		btnStart.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e)
+			{
+				if(e.getSource() == btnStart)
+				{
+					startTimer();
+				}
+			}
+		});
+		frame.getContentPane().add(btnStart);
+	
+		
+		textArea.setBounds(27, 157, 373, 61);
+		frame.getContentPane().add(textArea);
+	}
+	
+	public void run()
+	{
+		countMilli++;
+		textArea.setText("Millisekunden:" + countMilli);
+	}
+	
+	public void startTimer() {
+		t2 = new Timer();
+		t2.schedule(this, new Date(),1 );
+	}
+}
